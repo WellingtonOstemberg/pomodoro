@@ -124,12 +124,12 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
       <Timer mainTime={mainTime} />
       <div className="controls">
         <Button
-          style={working ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
+          style={working ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
           text="Start"
           onClick={() => configWork()}
         />
         <Button
-          style={resting ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
+          style={resting ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
           text="Rest"
           onClick={() => configRest(false)}
         />
