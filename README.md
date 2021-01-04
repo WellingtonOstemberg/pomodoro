@@ -18,6 +18,7 @@ Each 3 small rest the next will be a long rest of 10 minutes
 It counts how much time are you spending studing and how many cycles of 4 pomodoros did you complete
 When the background is red you are working time, and when it's blue, you are in your resting time
 
+## Um simples "Pomodoro"
 PT - Português
 Você pode usar estes intervalos do pomodoro para estudar ou praticar outra atividade
 Ele tem um contador de 25 minutos para atividade/trabalho e lhe dará um pequeno descanso de 5 minutos de descanso
@@ -26,4 +27,4 @@ Ele te mostra quanto tempo de estudo/trabalho você já tem e quantos ciclos de 
 Quando o fundo está vermelho é que você está em atividade e quando azul está descansando
 
 ## Boilerplate ReactJS 
-- Eslint, Typescript, Prettier
+- Eslint, Typescript, Prettier, ReactJS, React-Icons
