@@ -70,3 +70,20 @@ body {
 .pomodoro .details {
   margin: 20px 0;
 }
+.pomodoro .languages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.pomodoro .languages .buttons {
+  font-size: 25px;
+  font-weight: bold;
+}
+.pomodoro .languages .buttons .green {
+  background: rgb(73, 245, 73);
+}
+.pomodoro .languages .buttons .red {
+  background: rgb(170, 21, 21);
+  color: #fff;
+}

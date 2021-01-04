@@ -20,6 +20,7 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
   const [cycles, setCycles] = useState(0)
   const [completedCycles, setCompletedCycles] = useState(0)
   const [pomodoros, setPomodoros] = useState(0)
+  const [language, setLanguage] = useState('pt-br')
 
   /* Play a sound */
   const finish = '../sounds/finish.mp3'
@@ -82,6 +83,12 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
       setMainTime
     ]
   )
+  function changeToPortuguese() {
+    setLanguage('pt-br')
+  }
+  function changeToEnglish() {
+    setLanguage('en')
+  }
 
   /* Add a class to change de background on the body page */
   useEffect(() => {
@@ -120,30 +127,71 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
 
   return (
     <div className="pomodoro">
-      <h2>{working ? 'Você está trabalhando' : 'Você está descansando'}</h2>
+      <h2>
+        {language === 'pt-br'
+          ? working
+            ? 'Você está trabalhando'
+            : 'Você está descansando'
+          : working
+          ? 'You are working'
+          : 'You are resting'}
+      </h2>
       <Timer mainTime={mainTime} />
       <div className="controls">
         <Button
           style={working ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
-          text="Start"
+          text={language === 'pt-br' ? 'Trabalhar' : 'Work'}
           onClick={() => configWork()}
         />
         <Button
           style={resting ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
-          text="Rest"
+          text={language === 'pt-br' ? 'Descansar' : 'Rest'}
           onClick={() => configRest(false)}
         />
         <Button
           style={{ minWidth: '90px' }}
           className={!working && !resting ? 'hidden' : ''}
-          text={timeCounting ? 'Pause' : 'Play'}
+          text={timeCounting ? 'Pausar' : 'Iniciar'}
           onClick={() => pause()}
         />
       </div>
       <div className="details">
-        <p>Cíclos concluídos: {completedCycles}</p>
-        <p>Horas trabalhadas: {secondsToTime(workingTime)}</p>
-        <p>Pomodoros concluídos: {pomodoros}</p>
+        <p>
+          {language === 'pt-br' ? 'Cíclos completos' : 'Completed cycles'}:{' '}
+          {completedCycles}
+        </p>
+        <p>
+          {language === 'pt-br' ? 'Horas trabalhadas' : 'Worked time'}:{' '}
+          {secondsToTime(workingTime)}
+        </p>
+        <p>
+          {language === 'pt-br'
+            ? 'Pomodoros concluídos'
+            : 'Completed pomodoros'}
+          : {pomodoros}
+        </p>
+      </div>
+      <div className="languages">
+        <label>
+          {language === 'pt-br'
+            ? 'Select another language'
+            : 'Selecione outro idioma'}
+          :
+        </label>
+        <div className="buttons">
+          <button
+            onClick={changeToPortuguese}
+            className={language === 'pt-br' ? 'green hidden' : 'green'}
+          >
+            PT-BR
+          </button>
+          <button
+            onClick={changeToEnglish}
+            className={language === 'en' ? 'red hidden' : 'red'}
+          >
+            EN
+          </button>
+        </div>
       </div>
     </div>
   )
