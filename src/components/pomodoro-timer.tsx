@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { BiVolumeMute, BiVolumeFull } from 'react-icons/bi'
 import { useInterval } from '../hooks/set-iterval'
 import { secondsToTime } from '../utils/seconds-to-time'
 import Button from './button'
@@ -21,6 +22,7 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
   const [completedCycles, setCompletedCycles] = useState(0)
   const [pomodoros, setPomodoros] = useState(0)
   const [language, setLanguage] = useState('pt-br')
+  const [hasSound, setHasSound] = useState(true)
 
   /* Play a sound */
   const finish = '../sounds/finish.mp3'
@@ -57,8 +59,10 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
     setWorking(true)
     setResting(false)
     setMainTime(props.pomodoroTime)
-    audioStartWorking.play()
-  }, [props.pomodoroTime, setTimeCounting, setWorking, setResting, setMainTime])
+    if (hasSound) {
+      audioStartWorking.play()
+    }
+  }, [props.pomodoroTime, hasSound])
 
   /*  a function that represents a rest moment */
   const configRest = useCallback(
@@ -72,22 +76,24 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
       } else {
         setMainTime(props.shortRestTime)
       }
-      audioStopWorking.play()
+      if (hasSound) {
+        audioStopWorking.play()
+      }
     },
-    [
-      props.longRestTime,
-      props.shortRestTime,
-      setTimeCounting,
-      setWorking,
-      setResting,
-      setMainTime
-    ]
+    [hasSound, props.longRestTime, props.shortRestTime]
   )
   function changeToPortuguese() {
     setLanguage('pt-br')
   }
   function changeToEnglish() {
     setLanguage('en')
+  }
+  function setSound() {
+    if (hasSound) {
+      setHasSound(false)
+    } else {
+      setHasSound(true)
+    }
   }
 
   /* Add a class to change de background on the body page */
@@ -155,24 +161,37 @@ export default function PomodoroTime(props: PomodoroProps): JSX.Element {
           onClick={() => pause()}
         />
       </div>
-      <div className="details">
-        <p>
-          {language === 'pt-br' ? 'Cíclos completos' : 'Completed cycles'}:{' '}
-          {completedCycles}
-        </p>
-        <p>
-          {language === 'pt-br' ? 'Horas trabalhadas' : 'Worked time'}:{' '}
-          {secondsToTime(workingTime)}
-        </p>
-        <p>
-          {language === 'pt-br'
-            ? 'Pomodoros concluídos'
-            : 'Completed pomodoros'}
-          : {pomodoros}
-        </p>
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>
+              {language === 'pt-br' ? 'Cíclos completos' : 'Completed cycles'}
+            </th>
+            <th>
+              {language === 'pt-br' ? 'Horas trabalhadas' : 'Worked time'}
+            </th>
+            <th>
+              {language === 'pt-br'
+                ? 'Pomodoros concluídos'
+                : 'Completed pomodoros'}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{completedCycles}</td>
+            <td>{secondsToTime(workingTime)}</td>
+            <td>{pomodoros}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
       <div className="languages">
-        <label>
+        <button onClick={setSound}>
+          {hasSound ? <BiVolumeMute /> : <BiVolumeFull />}
+        </button>
+        <hr />
+        <label style={{ marginBottom: '-15px', marginTop: '20px' }}>
           {language === 'pt-br'
             ? 'Select another language'
             : 'Selecione outro idioma'}

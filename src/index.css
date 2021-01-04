@@ -87,3 +87,12 @@ body {
   background: rgb(170, 21, 21);
   color: #fff;
 }
+.pomodoro table {
+  border: 1px solid #ccc;
+  margin: 20px auto;
+  text-align: center;
+}
+.pomodoro table th, .pomodoro table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
